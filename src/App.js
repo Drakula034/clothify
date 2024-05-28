@@ -1,41 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import HomePage from "./pages/homepage/homepage.component.jsx";
 import ShopPage from "./pages/shoppage/shoppage.component.jsx";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import SignInAndOutPage from "./pages/sign-in-out-page/sign-in-out.component.jsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/header/header.component.jsx";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/", // Matches all paths (including root)
-//     element: (
-//       <div>
-//         <Header /> {/* Render the header here */}
-//         <main>
-//           <HomePage /> {/* Render the home page content */}
-//         </main>
-//       </div>
-//     ),
-//   },
-//   { path: "/shop", element: <ShopPage /> },
-// ]);
+import { auth } from "./firebase/firebase.utils.js";
 
 function App() {
-  // return <RouterProvider router={router} />;
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const subscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+    return () => {
+      subscribe();
+    };
+  }, []);
+
+  // console.log(currentUser);
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        <Header currentUser={currentUser} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/signin" element={<SignInAndOutPage />} />
         </Routes>
       </BrowserRouter>
     </div>

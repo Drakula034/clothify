@@ -3,8 +3,9 @@ import React from "react";
 import "./header.styles.scss";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/clothify.svg";
+import { auth } from "../../firebase/firebase.utils";
 
-function Header() {
+function Header({ currentUser }) {
   return (
     <div className="header">
       <NavLink to="/" className="logo-container">
@@ -17,6 +18,15 @@ function Header() {
         <NavLink className="option" to="/shop">
           CONTACT
         </NavLink>
+        {currentUser ? (
+          <div className="option" onClick={() => auth.signOut()}>
+            Sign Out
+          </div>
+        ) : (
+          <NavLink className="option" to="/signin">
+            Sign In
+          </NavLink>
+        )}
       </div>
     </div>
   );
