@@ -15,14 +15,14 @@ function SignUp() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const { displayName, email, password, confirmPassword } = user;
+
     if (password !== confirmPassword) {
-      alert("password don't match");
+      alert("Passwords don't match");
       return;
     }
 
     try {
-      const authUser = await auth.createUserWithEmailAndPassword(
+      const { user: authUser } = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
@@ -34,17 +34,21 @@ function SignUp() {
         confirmPassword: "",
       });
     } catch (error) {
-      console.log(error);
+      console.error("Error signing up:", error.message);
     }
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setUser({ [name]: value });
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
   }
+
   return (
     <div className="sign-up">
-      <h2 className="title">I do not have account</h2>
+      <h2 className="title">I do not have an account</h2>
       <span>Sign Up with your email and password</span>
       <form className="sign-up-form" onSubmit={handleSubmit}>
         <FormInput
@@ -73,10 +77,10 @@ function SignUp() {
         />
         <FormInput
           type="password"
-          name="confirmedPassword"
+          name="confirmPassword"
           value={confirmPassword}
           onChange={handleChange}
-          label="Confirmed Password"
+          label="Confirm Password"
           required
         />
         <Button type="submit">SIGN UP</Button>

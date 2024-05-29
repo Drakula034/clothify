@@ -5,7 +5,7 @@ function FormInput({ handleChange, label, ...props }) {
       <input className="form-input" onChange={handleChange} {...props} />
       {label ? (
         <label
-          className={`${props.value.length ? "shrink" : ""} form-input-label`}
+          className={`${props.value?.length ? "shrink" : ""} form-input-label`}
         >
           {label}
         </label>

@@ -7,9 +7,11 @@ import SignInAndOutPage from "./pages/sign-in-out-page/sign-in-out.component.jsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/header/header.component.jsx";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
+import { setCurrentUser } from "./redux/userSlice.jsx";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged(async (userAuth) => {
@@ -17,13 +19,16 @@ function App() {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
+          dispatch(
+            setCurrentUser({
+              id: snapShot.id,
+              ...snapShot.data(),
+            })
+          );
         });
+        // console.log(currentUser);
       } else {
-        setCurrentUser(userAuth);
+        dispatch(setCurrentUser(userAuth));
       }
     });
     return () => {
@@ -34,7 +39,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header currentUser={currentUser} />
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />

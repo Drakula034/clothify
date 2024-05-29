@@ -4,8 +4,10 @@ import "./header.styles.scss";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/clothify.svg";
 import { auth } from "../../firebase/firebase.utils";
+import { useSelector } from "react-redux";
 
-function Header({ currentUser }) {
+function Header() {
+  const currentUser = useSelector((state) => state.user.currentUser);
   return (
     <div className="header">
       <NavLink to="/" className="logo-container">
