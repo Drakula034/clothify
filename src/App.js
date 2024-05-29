@@ -6,21 +6,31 @@ import ShopPage from "./pages/shoppage/shoppage.component.jsx";
 import SignInAndOutPage from "./pages/sign-in-out-page/sign-in-out.component.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/header/header.component.jsx";
-import { auth } from "./firebase/firebase.utils.js";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const subscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+    const subscribe = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          });
+        });
+      } else {
+        setCurrentUser(userAuth);
+      }
     });
     return () => {
       subscribe();
     };
   }, []);
 
-  // console.log(currentUser);
   return (
     <div>
       <BrowserRouter>
