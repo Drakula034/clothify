@@ -1,0 +1,28 @@
+.cart-nav {
+  width: 45px;
+  height: 45px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .cart-icon {
+    width: 34px;
+    height: 38px;
+  }
+
+  .item-count {
+    position: absolute;
+    font-size: 13px;
+    font-weight: bold;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+
+    &.filled {
+      color: green;
+    }
+  }
+}

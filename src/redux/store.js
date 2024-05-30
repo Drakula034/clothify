@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { auth } from "../firebase/firebase.utils.js"; // Assuming you have imported Firebase
 import userReducer from "./userSlice.jsx";
+import cartReducer from "./cartSlice.js";
 
 // Custom serializer function for Firebase Timestamp objects
 const serialize = (value) => {
@@ -28,7 +29,7 @@ const serializeMiddleware = (store) => (next) => (action) => {
 };
 
 const store = configureStore({
-  reducer: { user: userReducer },
+  reducer: { user: userReducer, cart: cartReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

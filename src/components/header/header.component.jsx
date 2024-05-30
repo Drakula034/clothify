@@ -5,9 +5,14 @@ import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/clothify.svg";
 import { auth } from "../../firebase/firebase.utils";
 import { useSelector } from "react-redux";
+import CartNav from "../cart-nav/cart-nav.component";
+import CartModal from "../cart-modal/cart-modal.component";
+import { useDispatch } from "react-redux";
 
 function Header() {
   const currentUser = useSelector((state) => state.user.currentUser);
+  const hiddenCart = useSelector((state) => state.cart.hidden);
+  // const dispatch = useDispatch();
   return (
     <div className="header">
       <NavLink to="/" className="logo-container">
@@ -29,7 +34,9 @@ function Header() {
             Sign In
           </NavLink>
         )}
+        <CartNav />
       </div>
+      {hiddenCart ? null : <CartModal />}
     </div>
   );
 }
