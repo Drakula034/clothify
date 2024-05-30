@@ -2,12 +2,17 @@ import "./cart-nav.styles.scss";
 import { BiShoppingBag } from "react-icons/bi";
 
 import { toggleCartHidden } from "../../redux/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CntTotalItem } from "../../redux/utils/cart.utils";
+import { selectCartItemsCount } from "../../redux/utils/cart.selectors";
+import { useMemo } from "react";
 
 function CartNav() {
   const dispatch = useDispatch();
+  let items = useSelector((state) => state.cart.cartItems);
+  const count = useMemo(() => CntTotalItem(items), [items]);
+  // console.log(count);
 
-  let count = 0;
   return (
     <div className="cart-nav" onClick={() => dispatch(toggleCartHidden())}>
       <BiShoppingBag className="cart-icon" />

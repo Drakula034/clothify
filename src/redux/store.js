@@ -35,7 +35,7 @@ const store = configureStore({
       serializableCheck: {
         serialize,
       },
-    }).concat(serializeMiddleware), // Add the serializeMiddleware to the middleware chain
+    }).concat(logger, serializeMiddleware), // Add the serializeMiddleware to the middleware chain
 });
 
 export default store;
