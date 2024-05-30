@@ -19,3 +19,10 @@ export const CntTotalItem = (cartItems) => {
   let count = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   return count;
 };
+
+export const selectCartTotal = (cartItems) => {
+  return cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+};

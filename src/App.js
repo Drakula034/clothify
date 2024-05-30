@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
 
 import HomePage from "./pages/homepage/homepage.component.jsx";
 import ShopPage from "./pages/shoppage/shoppage.component.jsx";
 import SignInAndOutPage from "./pages/sign-in-out-page/sign-in-out.component.jsx";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/header/header.component.jsx";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils.js";
+import CheckoutPage from "./pages/checkout/checkout.jsx";
 import { setCurrentUser } from "./redux/userSlice.jsx";
-import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route
             exact
             path="/signin"
