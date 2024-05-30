@@ -26,3 +26,7 @@ export const selectCartTotal = (cartItems) => {
     0
   );
 };
+
+export const deleteItemFromCart = (cartItems, itemToRemove) => {
+  return cartItems.filter((cartItem) => cartItem.id !== itemToRemove.id);
+};
