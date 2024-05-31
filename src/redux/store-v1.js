@@ -1,15 +1,8 @@
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { auth } from "../firebase/firebase.utils.js"; // Assuming you have imported Firebase
 import userReducer from "./userSlice.jsx";
 import cartReducer from "./cartSlice.js";
-import { persistStore } from "redux-persist";
 
 // Custom serializer function for Firebase Timestamp objects
 const serialize = (value) => {
@@ -35,22 +28,8 @@ const serializeMiddleware = (store) => (next) => (action) => {
   return next(action);
 };
 
-const persistConfig = {
-  key: "root",
-  storage,
-  // blacklist: ["user"],
-  whitelist: ["cart"],
-};
-const persistedReducer = persistReducer(
-  persistConfig,
-  combineReducers({
-    user: userReducer,
-    cart: cartReducer,
-  })
-);
-
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: { user: userReducer, cart: cartReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -59,6 +38,4 @@ const store = configureStore({
     }).concat(logger, serializeMiddleware), // Add the serializeMiddleware to the middleware chain
 });
 
-const persistor = persistStore(store);
-
-export { store, persistor };
+export default store;

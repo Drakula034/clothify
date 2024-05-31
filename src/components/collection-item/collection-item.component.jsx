@@ -10,6 +10,7 @@ function CollectionItem({ item }) {
   const dispatch = useDispatch();
 
   function handleAddItem() {
+    // window.sessionStorage.setItem("item", JSON.stringify(item));
     dispatch(addItem(item));
   }
 
