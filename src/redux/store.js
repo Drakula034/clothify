@@ -53,12 +53,12 @@ const persistedReducer = persistReducer(
   })
 );
 
-const isProduction = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === "development";
 
 const middleware = [serializeMiddleware];
 
 // Add logger middleware only if not in production
-if (!isProduction) {
+if (isDevelopment) {
   middleware.push(logger);
 }
 
