@@ -9,7 +9,9 @@ import logger from "redux-logger";
 import { auth } from "../firebase/firebase.utils.js"; // Assuming you have imported Firebase
 import userReducer from "./userSlice.jsx";
 import cartReducer from "./cartSlice.js";
+import shopReducer from "./shopSlice.js";
 import { persistStore } from "redux-persist";
+import directoryReducer from "./directorySlice.js";
 
 // Custom serializer function for Firebase Timestamp objects
 const serialize = (value) => {
@@ -46,6 +48,8 @@ const persistedReducer = persistReducer(
   combineReducers({
     user: userReducer,
     cart: cartReducer,
+    directory: directoryReducer,
+    shop: shopReducer,
   })
 );
 

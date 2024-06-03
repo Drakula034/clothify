@@ -7,16 +7,16 @@ function CheckoutPage() {
   const total = selectCartTotal(cartItems);
   // const itemsInLocal = window.sessionStorage.getItem("cart");
   // cartItems = [...cartItems, ...JSON.parse(itemsInLocal)];
-  const itemsInLocal = window.sessionStorage.getItem("cart");
+  // const itemsInLocal = window.sessionStorage.getItem("cart");
 
-  if (itemsInLocal) {
-    try {
-      const parsedItems = JSON.parse(itemsInLocal);
-      cartItems = [...cartItems, ...parsedItems];
-    } catch (error) {
-      console.error("Error parsing cart items from sessionStorage:", error);
-    }
-  }
+  // if (itemsInLocal) {
+  //   try {
+  //     const parsedItems = JSON.parse(itemsInLocal);
+  //     cartItems = [...cartItems, ...parsedItems];
+  //   } catch (error) {
+  //     console.error("Error parsing cart items from sessionStorage:", error);
+  //   }
+  // }
 
   return (
     <div className="checkout-page">

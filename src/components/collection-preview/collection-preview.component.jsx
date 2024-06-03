@@ -12,7 +12,7 @@ function CollectionPreview({ title, items }) {
         {items
           .filter((item, index) => index < 4)
           .map((item) => (
-            <CollectionItem key={item.id} item={item} />
+            <CollectionItem key={item.id} item={item} overviewType="name" />
           ))}
       </div>
     </div>

@@ -10,6 +10,7 @@ import SignInAndOutPage from "./pages/sign-in-out-page/sign-in-out.component.jsx
 import Header from "./components/header/header.component.jsx";
 import CheckoutPage from "./pages/checkout/checkout.jsx";
 import { setCurrentUser } from "./redux/userSlice.jsx";
+import CollectionPage from "./pages/collection/collection.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:collectionId" element={<CollectionPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route
             exact
