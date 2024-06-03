@@ -53,6 +53,15 @@ const persistedReducer = persistReducer(
   })
 );
 
+const isProduction = process.env.NODE_ENV === "development";
+
+const middleware = [serializeMiddleware];
+
+// Add logger middleware only if not in production
+if (!isProduction) {
+  middleware.push(logger);
+}
+
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -60,7 +69,7 @@ const store = configureStore({
       serializableCheck: {
         serialize,
       },
-    }).concat(logger, serializeMiddleware), // Add the serializeMiddleware to the middleware chain
+    }).concat(middleware), // Add the serializeMiddleware to the middleware chain
 });
 
 const persistor = persistStore(store);
