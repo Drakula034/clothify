@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import "./checkout.scss";
 import { selectCartTotal } from "../../redux/utils/cart.utils.js";
 import CheckoutItem from "../../components/checkout-item/checkout-item.jsx";
+import StripeCheckoutButton from "../../components/stripe/stripe-button.jsx";
 function CheckoutPage() {
   let cartItems = useSelector((state) => state.cart.cartItems);
   const total = selectCartTotal(cartItems);
@@ -43,6 +44,8 @@ function CheckoutPage() {
       <div className="total">
         <span>Total: ${total}</span>
       </div>
+
+      <StripeCheckoutButton price={total} />
     </div>
   );
 }
