@@ -11,10 +11,15 @@ import Header from "./components/header/header.component.jsx";
 import CheckoutPage from "./pages/checkout/checkout.jsx";
 import { setCurrentUser } from "./redux/userSlice.jsx";
 import CollectionPage from "./pages/collection/collection.jsx";
+import { addCollectionsAndItems } from "./firebase/firebase.utils.js";
+import ShopCollectionPage from "./pages/ShopCollectionPage/ShopCollectionPage.jsx";
 
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+  // const collectionsObject = useSelector((state) => state.shop.collections);
+  // const collectionsArray = Object.values(collectionsObject);
+  // console.log(collectionsArray);
 
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged(async (userAuth) => {
@@ -32,6 +37,10 @@ function App() {
         // console.log(currentUser);
       } else {
         dispatch(setCurrentUser(userAuth));
+        // addCollectionsAndItems(
+        //   "collections",
+        //   collectionsArray.map(({ title, items }) => ({ title, items }))
+        // );
       }
     });
     return () => {
@@ -45,8 +54,16 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/shop/:collectionId" element={<CollectionPage />} />
+          {/* <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:collectionId" element={<CollectionPage />} />  */}
+          {/* <Route path="/shop/*" element={<ShopCollectionPage />} /> */}
+          <Route path="/shop" element={<ShopCollectionPage />}>
+            {/* {/* This route matches /shop */}
+            {/* <Route index element={<ShopPage />} /> */}
+            {/* This route matches /shop/:collectionId */}
+            <Route path=":collectionId" element={<CollectionPage />} />
+          </Route>
+
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route
             exact

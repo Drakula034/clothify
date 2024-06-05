@@ -1,22 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import SHOP_DATA from "./shop-data.js";
+// import SHOP_DATA from "./shop-data.js";
 
 const initialState = {
-  collections: SHOP_DATA,
+  // collections: SHOP_DATA,
+  collections: null,
 };
 
 const shopSlice = createSlice({
   name: "shop",
   initialState,
   reducers: {
-    // fetchDataForCollection(state, action) {
-    //   const payload = action.payload;
-    //   const data = state.SHOP_DATA.filter(
-    //     (collection) => collection.routeName === payload
-    //   );
-    //   return { ...state, SHOP_DATA: data };
-    // },
+    updateCollections(state, action) {
+      return { ...state, collections: action.payload };
+    },
   },
 });
 
@@ -24,7 +21,7 @@ const shopSlice = createSlice({
 
 export const fetchDataForCollection = (state, route) => {
   const getCollections = state.shop.collections; // Assuming 'shop' is the slice name
-  // console.log(getCollections);
+  console.log(getCollections);
   // const filteredData = getCollections.filter(
   //   (collection) => collection.routeName === route
   // );
@@ -33,9 +30,11 @@ export const fetchDataForCollection = (state, route) => {
   // );
   // console.log(filteredData[0]);
   // return filteredData[0];
-  const filteredData = getCollections[route];
-  // console.log(filteredData);
+  const filteredData = getCollections ? getCollections[route] : null;
+  console.log(filteredData);
   return filteredData;
 };
+
+export const { updateCollections } = shopSlice.actions;
 
 export default shopSlice.reducer;

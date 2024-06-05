@@ -5,16 +5,25 @@ import Category from "../../components/category/category";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { fetchDataForCollection } from "../../redux/shopSlice";
+import Spinner from "../../components/spinner/spinner";
+import { useState } from "react";
 
-function CollectionPage() {
-  const categoryName = useParams().collectionId;
+function CollectionPage({ categoryName, isLoading, collection }) {
+  // const categoryName = useParams().collectionId;
   // console.log("categoryname", categoryName);
-  const collections = useSelector((state) =>
-    fetchDataForCollection(state, categoryName)
-  );
+
+  // const collections = useSelector((state) =>
+  //   fetchDataForCollection(state, categoryName)
+  // );
+
+  const categoryCollection = collection ? collection[categoryName] : null;
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   // console.log(collections);
-  const { title, items, id } = collections;
+  const { title, items, id } = categoryCollection;
   // console.log(items);
   return (
     <div className="collection-page">
