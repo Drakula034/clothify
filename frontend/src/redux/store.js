@@ -12,6 +12,7 @@ import cartReducer from "./cartSlice.js";
 import shopReducer from "./shopSlice.js";
 import { persistStore } from "redux-persist";
 import directoryReducer from "./directorySlice.js";
+import { thunk } from "redux-thunk";
 
 // Custom serializer function for Firebase Timestamp objects
 const serialize = (value) => {
@@ -55,7 +56,7 @@ const persistedReducer = persistReducer(
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
-const middleware = [serializeMiddleware];
+const middleware = [serializeMiddleware, thunk];
 
 // Add logger middleware only if not in production
 if (isDevelopment) {

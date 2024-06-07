@@ -1,7 +1,6 @@
 import "./stripe-button.scss";
 
 import StripeCheckout from "react-stripe-checkout";
-import { SiMoneygram } from "react-icons/si";
 
 function StripeCheckoutButton({ price }) {
   const priceForStripe = price * 100;
@@ -10,7 +9,19 @@ function StripeCheckoutButton({ price }) {
 
   const onToken = (token) => {
     console.log(token);
-    alert("Payment Successfull");
+
+    // TODO: send the token to your server
+    const url = "payment";
+    const data = { amount: priceForStripe, token };
+
+    fetch(url, { method: "POST", body: JSON.stringify(data) })
+      .then((res) => {
+        alert("Payment Successful");
+      })
+      .catch((error) => {
+        console.log("Payment error: ", JSON.parse(error).error.message);
+        alert("There was an issue with your payment");
+      });
   };
 
   return (

@@ -46,7 +46,7 @@ function App() {
     return () => {
       subscribe();
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
